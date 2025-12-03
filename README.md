@@ -43,12 +43,26 @@ Service SSE permanent qui expose Rowboat via Supergateway MCP pour l'intégratio
 
 **Port**: 3000
 
-**Variables d'environnement** (optionnel):
+**Variables d'environnement**:
+
+**OBLIGATOIRE** - Clé API OpenAI :
+```bash
+OPENAI_API_KEY=sk-proj-votre-cle-api-openai
+```
+
+Optionnelles :
 ```bash
 PORT=3000
 HOST=0.0.0.0
 NODE_ENV=production
 ```
+
+⚠️ **Important** : La variable `OPENAI_API_KEY` est **REQUISE**. Sans elle, le serveur refusera de démarrer.
+
+Pour obtenir une clé API OpenAI :
+1. Visitez https://platform.openai.com/api-keys
+2. Créez une nouvelle clé API
+3. Copiez-la et ajoutez-la dans les variables d'environnement Coolify
 
 ### 3. Récupération de l'URL SSE
 
@@ -106,12 +120,23 @@ curl http://localhost:3000
 
 ## 🔍 Comment ça marche
 
-1. **server.js** lance Supergateway en mode SSE avec Rowboat comme backend
-2. Supergateway convertit le protocole stdio de Rowboat en Server-Sent Events (SSE)
-3. L'endpoint SSE est exposé publiquement via Coolify
-4. Flowise se connecte à cet endpoint SSE pour utiliser les capacités de Rowboat
+1. **Initialisation** : `init-rowboat.js` crée automatiquement la configuration Rowboat avec votre clé OpenAI
+2. **Démarrage** : `server.js` lance Supergateway avec les bons arguments (`--stdio --outputTransport sse`)
+3. **Conversion** : Supergateway convertit le protocole stdio de Rowboat en Server-Sent Events (SSE)
+4. **Exposition** : L'endpoint SSE (`/sse`) est exposé publiquement via Coolify
+5. **Connexion** : Flowise se connecte à cet endpoint SSE pour utiliser les capacités de Rowboat
 
 ## 🐛 Troubleshooting
+
+### Erreur "OPENAI_API_KEY is required"
+
+Le serveur refuse de démarrer car la variable d'environnement `OPENAI_API_KEY` est manquante.
+
+**Solution** :
+1. Allez dans les paramètres de votre application Coolify
+2. Section "Environment Variables"
+3. Ajoutez `OPENAI_API_KEY` avec votre clé API OpenAI
+4. Redéployez l'application
 
 ### Le serveur ne démarre pas
 
@@ -119,6 +144,8 @@ Vérifiez que les dépendances sont bien installées:
 ```bash
 npm ci
 ```
+
+Vérifiez les logs du conteneur dans Coolify pour identifier l'erreur exacte.
 
 ### L'URL Coolify ne fonctionne pas
 
