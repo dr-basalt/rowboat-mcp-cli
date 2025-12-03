@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "@rowboatlabs/rowboatx": "^0.1.0",
-    "@modelcontextprotocol/server-supergateway": "^0.6.2"
+    "supergateway": "latest"
   },
   "engines": {
     "node": ">=18.0.0"
