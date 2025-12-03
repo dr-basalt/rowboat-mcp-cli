@@ -1,0 +1,25 @@
+{
+  "name": "rowboat-mcp-sse-server",
+  "version": "1.0.0",
+  "description": "Rowboat MCP server exposed via SSE for Flowise integration",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "rowboat",
+    "mcp",
+    "sse",
+    "flowise",
+    "supergateway"
+  ],
+  "dependencies": {
+    "@rowboatlabs/rowboatx": "^0.1.0",
+    "@modelcontextprotocol/server-supergateway": "^0.6.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
